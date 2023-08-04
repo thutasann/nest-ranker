@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "6916e791-48ab-48c1-bbde-c0f4451d6c8d",
+		"name": "nest-react-polls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14049071"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "join",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/join",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rejoin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/polls/rejoin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"polls",
+						"rejoin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
