@@ -1,7 +1,6 @@
 {
-  "name": "ranker-course",
+  "name": "nest-ranker",
   "version": "0.0.1",
-  "description": "Make decisions with friends via ranked voting!",
   "main": "index.js",
   "workspaces": [
     "client",
@@ -18,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JacobSNGoodwin/ranker.git"
+    "url": "git+https://github.com/thutasann/nest-ranker.git.git"
   },
   "keywords": [
     "ts",
@@ -26,12 +25,15 @@
     "nestjs",
     "socketjs"
   ],
-  "author": "Jacob Goodwin",
+  "author": {
+    "name": "Thuta Sann",
+    "email": "thutasann2002@gmail.com"
+  },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JacobSNGoodwin/ranker/issues"
+    "url": "https://github.com/thutasann/nest-ranker/issues"
   },
-  "homepage": "https://github.com/JacobSNGoodwin/ranker#readme",
+  "homepage": "https://github.com/thutasann/nest-ranker#readme",
   "devDependencies": {
     "@types/webpack": "^5.28.0",
     "concurrently": "^7.0.0",

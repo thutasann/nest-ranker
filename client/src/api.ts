@@ -14,7 +14,7 @@ interface MakeRequestResponse<T> {
 
 const makeRequest = async <T>(
   endpoint: string,
-  reqInit?: RequestInit
+  reqInit?: RequestInit,
 ): Promise<MakeRequestResponse<T>> => {
   try {
     const response = await fetch(`${baseApiUrl}${endpoint}`, {
