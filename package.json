@@ -5,7 +5,8 @@
   "description": "This is the Web app where we can vote upon the topics in real time with your Friends.",
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "shared"
   ],
   "scripts": {
     "docker:compose": "docker-compose up -d",
