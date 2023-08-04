@@ -15,7 +15,7 @@ This is the Web app where we can vote upon the topics in real time with your Fri
 - Docker
 - Tailwind
 
-## Available Commands
+## Run Locally
 
 ### Install the Dependencies
 
@@ -26,5 +26,5 @@ npm install
 ### Running both client and server
 
 ```bash
-yarn start
+npm run start
 ```
