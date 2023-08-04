@@ -11,15 +11,25 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topic\": \"pollId\",\n    \"votesPerVoter\": \"thuta\",\n    \"name\": \"thuta sann\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/polls",
+					"raw": "http://localhost:3000/polls/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"polls"
+						"polls",
+						"create"
 					]
 				}
 			},
@@ -30,6 +40,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pollID\": \"pollId\",\n    \"name\": \"thuta\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:3000/polls/join",
 					"protocol": "http",
@@ -60,6 +79,36 @@
 					"path": [
 						"polls",
 						"rejoin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "production endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topic\": \"pollId\",\n    \"votesPerVoter\": \"thuta\",\n    \"name\": \"thuta sann\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ranker-api.onrender.com/polls/create",
+					"protocol": "https",
+					"host": [
+						"ranker-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"polls",
+						"create"
 					]
 				}
 			},

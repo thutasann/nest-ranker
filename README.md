@@ -2,6 +2,10 @@
 
 This is the Web app where we can vote upon the topics in real time with your Friends.
 
+## Deployed URI
+
+- Backend - [https://ranker-api.onrender.com/](https://ranker-api.onrender.com/)
+
 ## Tech stacks
 
 - Nestjs
