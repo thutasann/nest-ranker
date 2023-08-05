@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"topic\": \"pollId\",\n    \"votesPerVoter\": \"thuta\",\n    \"name\": \"thuta sann\"\n}",
+					"raw": "{\n    \"topic\": \"pollId\",\n    \"votesPerVoter\": 3,\n    \"name\": \"player1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"pollID\": \"pollId\",\n    \"name\": \"thuta\"\n}",
+					"raw": "{\n    \"pollID\": \"1VVWW0\",\n    \"name\": \"player2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,6 +69,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accessToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwb2xsSUQiOiIxVlZXVzAiLCJuYW1lIjoicGxheWVyMiIsImlhdCI6MTY5MTI0NDQ2NCwiZXhwIjoxNjkxMjUxNjY0LCJzdWIiOiJHWUl5QjQxYjkwUXYtSS1sZUhpZzIifQ.8Th4GbH-o8tFmv3g92EyqyC4pYBhvOeKUxxmZ1Kiu78\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:3000/polls/rejoin",
 					"protocol": "http",

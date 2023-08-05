@@ -1,5 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { CreatePollDto, JoinPollDto } from './dtos/polls.dto';
+import { ControllerAuthGuard } from './guard/controller-auth.guard';
+import { IRequestWithAuth } from './interfaces/polls.interface';
 import { PollService } from './polls.service';
 
 @Controller('polls')
@@ -16,12 +18,15 @@ export class PollsController {
     return await this.pollService.joinPoll(joinPollDto);
   }
 
+  @UseGuards(ControllerAuthGuard)
   @Post('/rejoin')
-  async rejoin() {
+  async rejoin(@Req() request: IRequestWithAuth) {
+    const { userID, pollID, name } = request;
+
     return await this.pollService.rejoinPoll({
-      name: 'From token',
-      pollID: 'Also from token',
-      userID: 'Guess where this comes from',
+      userID,
+      pollID,
+      name,
     });
   }
 }

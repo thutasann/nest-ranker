@@ -1,3 +1,5 @@
+import { Request } from '@nestjs/common';
+
 // ----- Service Fields Types
 export interface ICreatePollFields {
   topic: string;
@@ -17,7 +19,6 @@ export interface IRejoinPollFields {
 }
 
 // -----  Repositories Types
-
 export interface CreatePollDataProps {
   pollID: string;
   topic: string;
@@ -30,3 +31,16 @@ export interface AddParticipantDataProps {
   userID: string;
   name: string;
 }
+
+// ---- Request Structure
+
+interface IAuthPayload {
+  userID: string;
+  pollID: string;
+  name: string;
+}
+
+/**
+ * Guard Auth Request
+ */
+export type IRequestWithAuth = Request & IAuthPayload;
