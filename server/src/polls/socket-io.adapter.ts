@@ -5,13 +5,13 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Server, ServerOptions } from 'socket.io';
 import { createTokenMiddleware } from './utils/middleware';
 
-/**
- * SocketIO Adapter
- * @description This method is for about calling the dynamic ports from env
- */
 export class SocketIOAdapter extends IoAdapter {
   private readonly logger = new Logger(SocketIOAdapter.name);
 
+  /**
+   * SocketIO Adapter
+   * @description This method is for about calling the dynamic ports from env
+   */
   constructor(
     private app: INestApplicationContext,
     private configService: ConfigService,

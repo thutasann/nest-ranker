@@ -13,15 +13,15 @@ import {
 } from '../interfaces/polls.interface';
 import { IPoll } from 'shared';
 
-/**
- * Polls Repository
- * @description Repository for Create Poll, Get Poll, Add Participant
- */
 @Injectable()
 export class PollsRepository {
   private readonly ttl: string;
   private readonly logger = new Logger(PollsRepository.name);
 
+  /**
+   * Polls Repository
+   * @description Repository for Create Poll, Get Poll, Add Participant
+   */
   constructor(
     configService: ConfigService,
     @Inject(IORedisKey) private readonly redisClient: Redis,
@@ -76,7 +76,7 @@ export class PollsRepository {
 
   /**
    * Get Poll Method
-   * @param {string} pollID  - Poll ID
+   * @param { string } pollID  - Poll ID
    * @returns { Promise<IPoll> } Poll Data
    */
   async getPoll(pollID: string): Promise<IPoll> {
@@ -142,6 +142,30 @@ export class PollsRepository {
     } catch (error) {
       this.logger.error(`🛑 Failed to add new Participant ${name}\n${error}`);
       throw new InternalServerErrorException();
+    }
+  }
+
+  /**
+   * Remove Participant Method
+   * @param { string } pollID - Poll ID
+   * @param { string } userID - user ID
+   * @returns { Promise<IPoll> } Poll Data
+   */
+  async removeParticipant(pollID: string, userID: string): Promise<IPoll> {
+    this.logger.log(`🦵🏻 removing userID: ${userID} from poll: ${pollID}`);
+
+    const key = `polls:${pollID}`;
+    const participantPath = `.participants.${userID}`;
+
+    try {
+      await this.redisClient.send_command('JSON.DEL', key, participantPath);
+      return this.getPoll(pollID);
+    } catch (error) {
+      this.logger.error(
+        `Failed to remove userID: ${userID} from poll: ${pollID}`,
+        error,
+      );
+      throw new InternalServerErrorException('Failed to remove participant');
     }
   }
 }

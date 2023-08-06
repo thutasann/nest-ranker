@@ -2,13 +2,13 @@ import { WsException } from '@nestjs/websockets';
 
 type WsExceptionType = 'BadRequest' | 'Unauthorized' | 'Unknown';
 
-/**
- * Custom WebsocketTypeException
- * @description this is to be used in the Socket Connection Exceptions
- */
 export class WsTypeException extends WsException {
   readonly type: WsExceptionType;
 
+  /**
+   * Custom WebsocketTypeException
+   * @description this is to be used in the Socket Connection Exceptions
+   */
   constructor(type: WsExceptionType, message: string | unknown) {
     const error = {
       type,
@@ -19,28 +19,28 @@ export class WsTypeException extends WsException {
   }
 }
 
-/**
- * WebSocket BadRequest Exception
- */
 export class WsBadRequestException extends WsTypeException {
+  /**
+   * WebSocket BadRequest Exception
+   */
   constructor(message: string | unknown) {
     super('BadRequest', message);
   }
 }
 
-/**
- * WebSocket UnAuthorized Exception
- */
 export class WsUnauthorizedException extends WsTypeException {
+  /**
+   * WebSocket UnAuthorized Exception
+   */
   constructor(message: string | unknown) {
     super('Unauthorized', message);
   }
 }
 
-/**
- * WebSocket Unknown Exception
- */
 export class WsUnknownException extends WsTypeException {
+  /**
+   * WebSocket Unknown Exception
+   */
   constructor(message: string | unknown) {
     super('Unknown', message);
   }

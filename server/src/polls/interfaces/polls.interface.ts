@@ -35,7 +35,7 @@ export interface AddParticipantDataProps {
 
 // ---- Request Structure
 
-interface IAuthPayload {
+export interface IAuthPayload {
   userID: string;
   pollID: string;
   name: string;

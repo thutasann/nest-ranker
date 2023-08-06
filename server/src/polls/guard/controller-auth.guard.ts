@@ -8,9 +8,14 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { IRequestWithAuth } from '../interfaces/polls.interface';
 
+/**
+ * Controller Auth Guard
+ * @description Controller Auth Guard For Authorization
+ */
 @Injectable()
 export class ControllerAuthGuard implements CanActivate {
   private readonly logger = new Logger(ControllerAuthGuard.name);
+
   constructor(private readonly jwtService: JwtService) {}
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {

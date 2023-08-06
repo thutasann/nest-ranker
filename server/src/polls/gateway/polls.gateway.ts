@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Logger,
   UseFilters,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -12,9 +12,12 @@ import {
   OnGatewayDisconnect,
   WebSocketServer,
   SubscribeMessage,
+  MessageBody,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Namespace } from 'socket.io';
 import { WsCatchAllFilter } from '../exceptions/ws-catch-all-filter';
+import { GatewayAdminGuard } from '../guard/getway-admin-guard';
 import { ISocketWithAuth } from '../interfaces/polls.interface';
 import { PollService } from '../polls.service';
 
@@ -36,7 +39,7 @@ export class PollsGateway
     this.logger.log(`🌍 Websocket Gateway initialized. `);
   }
 
-  handleConnection(client: ISocketWithAuth) {
+  async handleConnection(client: ISocketWithAuth) {
     const sockets = this.io.sockets;
 
     this.logger.debug(
@@ -49,8 +52,14 @@ export class PollsGateway
     this.io.emit('hello', `👋 from ${client.id}`);
   }
 
-  handleDisconnect(client: ISocketWithAuth) {
+  async handleDisconnect(client: ISocketWithAuth) {
     const sockets = this.io.sockets;
+
+    const { pollID, userID } = client;
+    const updatedPoll = await this.pollsService.removeParticipant(
+      pollID,
+      userID,
+    );
 
     this.logger.debug(
       `💬 Socket connected with userID: ${client.userID}, pollID:${client.pollID}, and name: ${client.name}`,
@@ -58,12 +67,29 @@ export class PollsGateway
 
     this.logger.log(`🔔 Disconnected socket id : ${client.id}`);
     this.logger.debug(`🔢 Number of connected sockets: ${sockets.size}`);
+
+    if (updatedPoll) {
+      this.io.to(pollID).emit('poll_updated', updatedPoll);
+    }
   }
 
-  @SubscribeMessage('test')
-  async test() {
-    throw new BadRequestException({
-      test: 'test',
-    });
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('remove_participant')
+  async removeParticipant(
+    @MessageBody('id') id: string,
+    @ConnectedSocket() client: ISocketWithAuth,
+  ) {
+    this.logger.debug(
+      `🦵🏻 Attempting to remove participant ${id} from poll ${client.pollID}`,
+    );
+
+    const updatedPoll = await this.pollsService.removeParticipant(
+      client.pollID,
+      id,
+    );
+
+    if (updatedPoll) {
+      this.io.to(client.pollID).emit('poll_updated', updatedPoll);
+    }
   }
 }
