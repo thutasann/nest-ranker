@@ -8,5 +8,5 @@ export interface IPoll {
   votesPerVoter: number;
   participants: IParticipants;
   adminID: string;
-  hasStarted: boolean;
+  hasStarted?: boolean;
 }

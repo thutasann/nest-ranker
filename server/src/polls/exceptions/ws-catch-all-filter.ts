@@ -5,7 +5,11 @@ import {
   ExceptionFilter,
 } from '@nestjs/common';
 import { ISocketWithAuth } from '../interfaces/polls.interface';
-import { WsBadRequestException, WsUnknownException } from './ws-exceptions';
+import {
+  WsBadRequestException,
+  WsTypeException,
+  WsUnknownException,
+} from './ws-exceptions';
 
 /**
  * Websocket Exception Filter
@@ -24,6 +28,11 @@ export class WsCatchAllFilter implements ExceptionFilter {
       const wsException = new WsBadRequestException(exceptionMessage);
 
       socket.emit('exception', wsException.getError());
+      return;
+    }
+
+    if (exception instanceof WsTypeException) {
+      socket.emit('exception', exception.getError());
       return;
     }
 

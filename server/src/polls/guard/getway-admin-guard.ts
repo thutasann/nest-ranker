@@ -40,13 +40,13 @@ export class GatewayAdminGuard implements CanActivate {
         token,
       );
 
-      this.logger.debug(`🔐 Validating admin using token payload: ${payload}`);
+      this.logger.debug(`🔐 Validating admin using token payload`, payload);
 
-      const { userID, pollID } = payload;
+      const { pollID, sub } = payload;
 
       const poll = await this.pollsService.getPoll(pollID);
 
-      if (userID !== poll.adminID) {
+      if (sub !== poll.adminID) {
         throw new WsUnauthorizedException('🛑 Admin privileges required');
       }
 
