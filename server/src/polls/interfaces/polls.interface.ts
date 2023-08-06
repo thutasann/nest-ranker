@@ -1,4 +1,5 @@
-import { Request } from '@nestjs/common';
+import { Request } from 'express';
+import { Socket } from 'socket.io';
 
 // ----- Service Fields Types
 export interface ICreatePollFields {
@@ -44,3 +45,8 @@ interface IAuthPayload {
  * Guard Auth Request
  */
 export type IRequestWithAuth = Request & IAuthPayload;
+
+/**
+ * Socket With Auth
+ */
+export type ISocketWithAuth = Socket & IAuthPayload;

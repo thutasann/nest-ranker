@@ -6,6 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { IRequestWithAuth } from '../interfaces/polls.interface';
 
 @Injectable()
 export class ControllerAuthGuard implements CanActivate {
@@ -13,7 +14,7 @@ export class ControllerAuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const request: IRequestWithAuth = context.switchToHttp().getRequest();
 
     this.logger.debug(
       `🔐 Checking for auth token on request body`,

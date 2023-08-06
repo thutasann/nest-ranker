@@ -1,7 +1,9 @@
 import { INestApplicationContext, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { ServerOptions } from 'socket.io';
+import { Server, ServerOptions } from 'socket.io';
+import { createTokenMiddleware } from './utils/middleware';
 
 /**
  * SocketIO Adapter
@@ -17,7 +19,7 @@ export class SocketIOAdapter extends IoAdapter {
     super(app);
   }
 
-  createIOServer(port: number, options?: ServerOptions) {
+  createIOServer(port: number, options?: ServerOptions): Server {
     const clientPort = parseInt(this.configService.get('CLIENT_PORT'));
 
     const cors = {
@@ -36,7 +38,12 @@ export class SocketIOAdapter extends IoAdapter {
       cors,
     };
 
-    // need to return this, even though the signature says it returns void
-    return super.createIOServer(port, optionsWithCORS);
+    const jwtService = this.app.get(JwtService);
+    const server: Server = super.createIOServer(port, optionsWithCORS);
+
+    server.of('polls').use(createTokenMiddleware(jwtService, this.logger));
+
+    // return the server that now has the middleware
+    return server;
   }
 }
