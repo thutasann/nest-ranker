@@ -21,15 +21,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/polls/create",
+					"raw": "http://localhost:3000/polls",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"polls",
-						"create"
+						"polls"
 					]
 				}
 			},
@@ -42,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"pollID\": \"1VVWW0\",\n    \"name\": \"player2\"\n}",
+					"raw": "{\n    \"pollID\": \"IN75M5\",\n    \"name\": \"player2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
