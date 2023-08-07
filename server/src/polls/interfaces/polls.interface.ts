@@ -32,6 +32,12 @@ export interface IAddNorminationFields {
   text: string;
 }
 
+export interface ISubmitRankingsFields {
+  pollID: string;
+  userID: string;
+  rankings: string[];
+}
+
 // -----  Repositories Types
 export interface CreatePollDataProps {
   pollID: string;
@@ -44,6 +50,18 @@ export interface AddParticipantDataProps {
   pollID: string;
   userID: string;
   name: string;
+}
+
+export interface AddNorminationDataProps {
+  pollID: string;
+  norminationID: string;
+  normination: INormation;
+}
+
+export interface AddParticipantRankingsDataProps {
+  pollID: string;
+  userID: string;
+  rankings: string[];
 }
 
 // ---- Request Structure

@@ -9,6 +9,7 @@ import { Redis } from 'ioredis';
 import { IORedisKey } from 'src/redis.module';
 import {
   AddParticipantDataProps,
+  AddParticipantRankingsDataProps,
   CreatePollDataProps,
   IAddNorminationData,
 } from '../interfaces/polls.interface';
@@ -49,6 +50,7 @@ export class PollsRepository {
       adminID: userID,
       hasStarted: false,
       norminations: {},
+      rankings: {},
     };
 
     this.logger.log(
@@ -215,6 +217,66 @@ export class PollsRepository {
       );
       throw new InternalServerErrorException(
         `Failed to remove norminationID: ${norminationID} from poll: ${pollID}`,
+      );
+    }
+  }
+
+  /**
+   * Start Poll method
+   * @param {string} pollID - poll ID
+   * @returns { Promise<IPoll> } poll Data
+   */
+  async startPoll(pollID: string): Promise<IPoll> {
+    this.logger.log(`📚 setting hasStarted for poll: ${pollID}`);
+
+    const key = `polls:${pollID}`;
+
+    try {
+      await this.redisClient.send_command(
+        'JSON.SET',
+        key,
+        JSON.stringify(true),
+      );
+      return this.getPoll(pollID);
+    } catch (error) {
+      this.logger.error(`🛑 Failed set hasStarted for poll: ${pollID}`, error);
+      throw new InternalServerErrorException(
+        'Something went wrong in starting the poll',
+      );
+    }
+  }
+
+  /**
+   * Add Participants' Rankings
+   * @param { AddParticipantRankingsDataProps } param - Add Participants Rankings Data Props
+   * @returns { Promise<IPoll> } poll Data
+   */
+  async addParticipantRankings({
+    pollID,
+    userID,
+    rankings,
+  }: AddParticipantRankingsDataProps): Promise<IPoll> {
+    this.logger.log(
+      `Attempting to add rankings for userId/name : ${userID} to pollId: ${pollID}`,
+    );
+
+    const key = `polls:${pollID}`;
+    const rankingsPath = `.rankings.${userID}`;
+
+    try {
+      await this.redisClient.send_command(
+        'JSON.SET',
+        key,
+        rankingsPath,
+        JSON.stringify(rankings),
+      );
+      return this.getPoll(pollID);
+    } catch (error) {
+      this.logger.error(
+        `🛑 Failed to add a rankning for userID: ${userID} to pollID: ${pollID}`,
+      );
+      throw new InternalServerErrorException(
+        `Failed to add a rankning for userID: ${userID} to pollID: ${pollID}`,
       );
     }
   }

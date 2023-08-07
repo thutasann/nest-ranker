@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IPoll } from 'shared';
 import {
@@ -7,6 +7,7 @@ import {
   ICreatePollFields,
   IJoinPollFields,
   IRejoinPollFields,
+  ISubmitRankingsFields,
 } from './interfaces/polls.interface';
 import { PollsRepository } from './respository/polls.repository';
 import { createNorminationID, createPollID, createUserID } from './utils/ids';
@@ -133,5 +134,21 @@ export class PollService {
     norminationID: string,
   ): Promise<IPoll> {
     return this.pollsRepository.removeNormination(pollID, norminationID);
+  }
+
+  async startPoll(pollID: string): Promise<IPoll> {
+    return this.pollsRepository.startPoll(pollID);
+  }
+
+  async submitRankings(rankingsData: ISubmitRankingsFields): Promise<IPoll> {
+    const hasPollStarated = this.pollsRepository.getPoll(rankingsData.pollID);
+
+    if (!hasPollStarated) {
+      throw new BadRequestException(
+        `Participants cannot rank until the poll has started`,
+      );
+    }
+
+    return this.pollsRepository.addParticipantRankings(rankingsData);
   }
 }

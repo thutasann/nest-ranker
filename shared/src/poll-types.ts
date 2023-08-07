@@ -1,5 +1,11 @@
+type NorminationID = string;
+
 export interface IParticipants {
-  [participantID: string]: string;
+  [participantID: NorminationID]: string;
+}
+
+export interface IRankings {
+  [userID: string]: NorminationID[];
 }
 
 export interface IPoll {
@@ -10,6 +16,7 @@ export interface IPoll {
   adminID: string;
   hasStarted: boolean;
   norminations: INorminations;
+  rankings: IRankings;
 }
 
 export interface INormation {
