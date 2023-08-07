@@ -19,6 +19,17 @@ export interface IRejoinPollFields {
   name: string;
 }
 
+export interface IAddParticipantFields {
+  pollID: string;
+  userID: string;
+  name: string;
+}
+
+export interface IRemoveParticipantData {
+  pollID: string;
+  userID: string;
+}
+
 // -----  Repositories Types
 export interface CreatePollDataProps {
   pollID: string;

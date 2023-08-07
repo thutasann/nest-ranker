@@ -40,17 +40,18 @@ export class PollsRepository {
     pollID,
     userID,
   }: CreatePollDataProps): Promise<IPoll> {
-    const inititalPoll: IPoll = {
+    const initialPoll: IPoll = {
       id: pollID,
       topic,
       votesPerVoter,
       participants: {},
       adminID: userID,
+      hasStarted: false,
     };
 
     this.logger.log(
       `🌟 Creating new poll : ${JSON.stringify(
-        inititalPoll,
+        initialPoll,
         null,
         2,
       )} with TTL ${this.ttl}`,
@@ -61,14 +62,14 @@ export class PollsRepository {
     try {
       await this.redisClient
         .multi([
-          ['send_command', 'JSON.SET', key, '.', JSON.stringify(inititalPoll)],
+          ['send_command', 'JSON.SET', key, '.', JSON.stringify(initialPoll)],
           ['expire', key, this.ttl],
         ])
         .exec();
-      return inititalPoll;
+      return initialPoll;
     } catch (error) {
       this.logger.error(
-        `🛑 Failed to add poll ${JSON.stringify(inititalPoll)}\n${error}`,
+        `🛑 Failed to add poll ${JSON.stringify(initialPoll)}\n${error}`,
       );
       throw new InternalServerErrorException();
     }

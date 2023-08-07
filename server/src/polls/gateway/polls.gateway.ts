@@ -41,32 +41,50 @@ export class PollsGateway
 
   async handleConnection(client: ISocketWithAuth) {
     const sockets = this.io.sockets;
+    this.logger.debug(
+      ` Number of all of the connected sockets: ${sockets.size}`,
+    );
 
     this.logger.debug(
       `💬 Socket connected with userID: ${client.userID}, pollID:${client.pollID}, and name: ${client.name}`,
     );
 
-    this.logger.log(`🔔 WS client with id : ${client.id} connected`);
-    this.logger.debug(`🔢 Number of connected sockets: ${sockets.size}`);
+    const roomName = client.pollID;
+    await client.join(roomName);
 
-    this.io.emit('hello', `👋 from ${client.id}`);
+    const connectedClients = this.io.adapter.rooms?.get(roomName)?.size ?? 0;
+
+    this.logger.debug(
+      ` 🔔 userID: ${client.userID} joined the room with name: ${roomName}`,
+    );
+    this.logger.debug(
+      ` 🔢 Total clients connected to room ${roomName}: ${connectedClients}`,
+    );
+
+    const updatedPoll = await this.pollsService.addParticipant({
+      pollID: client.pollID,
+      userID: client.userID,
+      name: client.name,
+    });
+
+    this.io.to(roomName).emit('poll_updated', updatedPoll);
   }
 
   async handleDisconnect(client: ISocketWithAuth) {
-    const sockets = this.io.sockets;
-
     const { pollID, userID } = client;
     const updatedPoll = await this.pollsService.removeParticipant(
       pollID,
       userID,
     );
 
-    this.logger.debug(
-      `💬 Socket connected with userID: ${client.userID}, pollID:${client.pollID}, and name: ${client.name}`,
-    );
+    const roomName = client.pollID;
+    const clientCount = this.io.adapter.rooms?.get(roomName)?.size ?? 0;
 
-    this.logger.log(`🔔 Disconnected socket id : ${client.id}`);
-    this.logger.debug(`🔢 Number of connected sockets: ${sockets.size}`);
+    this.logger.log(`Disconnected socket id: ${client.id}`);
+    this.logger.debug(`Number of connected sockets: ${clientCount}`);
+    this.logger.debug(
+      `Total clients connected to room ${roomName}: ${clientCount}`,
+    );
 
     if (updatedPoll) {
       this.io.to(pollID).emit('poll_updated', updatedPoll);

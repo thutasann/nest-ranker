@@ -20,27 +20,18 @@ export class WsTypeException extends WsException {
 }
 
 export class WsBadRequestException extends WsTypeException {
-  /**
-   * WebSocket BadRequest Exception
-   */
   constructor(message: string | unknown) {
     super('BadRequest', message);
   }
 }
 
 export class WsUnauthorizedException extends WsTypeException {
-  /**
-   * WebSocket UnAuthorized Exception
-   */
   constructor(message: string | unknown) {
     super('Unauthorized', message);
   }
 }
 
 export class WsUnknownException extends WsTypeException {
-  /**
-   * WebSocket Unknown Exception
-   */
   constructor(message: string | unknown) {
     super('Unknown', message);
   }
