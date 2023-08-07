@@ -9,8 +9,8 @@ export interface IRankings {
 }
 
 export type IResults = Array<{
-  norminationID: NorminationID;
-  norminationText: string;
+  nominationID: NorminationID;
+  nominationText: string;
   score: number;
 }>;
 
