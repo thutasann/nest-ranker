@@ -10,6 +10,7 @@ import {
   ISubmitRankingsFields,
 } from './interfaces/polls.interface';
 import { PollsRepository } from './respository/polls.repository';
+import { getResults } from './utils/getResults';
 import { createNorminationID, createPollID, createUserID } from './utils/ids';
 
 @Injectable()
@@ -150,5 +151,21 @@ export class PollService {
     }
 
     return this.pollsRepository.addParticipantRankings(rankingsData);
+  }
+
+  async computeResults(pollID: string): Promise<IPoll> {
+    const poll = await this.pollsRepository.getPoll(pollID);
+
+    const results = getResults(
+      poll.rankings,
+      poll.norminations,
+      poll.votesPerVoter,
+    );
+
+    return this.pollsRepository.addResults(pollID, results);
+  }
+
+  async cancelPoll(pollID: string): Promise<void> {
+    await this.pollsRepository.deletePoll(pollID);
   }
 }

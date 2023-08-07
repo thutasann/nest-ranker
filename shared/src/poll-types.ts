@@ -8,6 +8,12 @@ export interface IRankings {
   [userID: string]: NorminationID[];
 }
 
+export type IResults = Array<{
+  norminationID: NorminationID;
+  norminationText: string;
+  score: number;
+}>;
+
 export interface IPoll {
   id: string;
   topic: string;
@@ -17,6 +23,7 @@ export interface IPoll {
   hasStarted: boolean;
   norminations: INorminations;
   rankings: IRankings;
+  results: IResults;
 }
 
 export interface INormation {
