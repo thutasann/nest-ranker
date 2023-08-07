@@ -25,6 +25,10 @@ npm install
 npm run start
 ```
 
+### Server
+
 open [http://localhost:3000/](http://localhost:3000/) to view server running in the postman.
+
+### Client
 
 open [http://localhost:8080/](http://localhost:8080/) to view client running in the browser.

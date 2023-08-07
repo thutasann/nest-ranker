@@ -16,6 +16,7 @@ import {
   ConnectedSocket,
 } from '@nestjs/websockets';
 import { Namespace } from 'socket.io';
+import { NorminationDto } from '../dtos/polls.dto';
 import { WsCatchAllFilter } from '../exceptions/ws-catch-all-filter';
 import { GatewayAdminGuard } from '../guard/getway-admin-guard';
 import { ISocketWithAuth } from '../interfaces/polls.interface';
@@ -109,5 +110,41 @@ export class PollsGateway
     if (updatedPoll) {
       this.io.to(client.pollID).emit('poll_updated', updatedPoll);
     }
+  }
+
+  @SubscribeMessage('norminate')
+  async norminate(
+    @MessageBody() normination: NorminationDto,
+    @ConnectedSocket() client: ISocketWithAuth,
+  ): Promise<void> {
+    this.logger.debug(
+      `💬 Attempting to add normination for user ${client.userID} to poll ${client.pollID}\n${normination.text}`,
+    );
+
+    const updatedPoll = await this.pollsService.addNormination({
+      pollID: client.pollID,
+      userID: client.pollID,
+      text: normination.text,
+    });
+
+    this.io.to(client.pollID).emit('poll_updated', updatedPoll);
+  }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('remove_normination')
+  async removeNormination(
+    @MessageBody('id') norminationID: string,
+    @ConnectedSocket() client: ISocketWithAuth,
+  ): Promise<void> {
+    this.logger.debug(
+      `Attempting to remove normination ${norminationID} from poll ${client.pollID}`,
+    );
+
+    const updatedPoll = await this.pollsService.removeNormination(
+      client.pollID,
+      norminationID,
+    );
+
+    this.io.to(client.pollID).emit('poll_updated', updatedPoll);
   }
 }

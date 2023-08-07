@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { INormation } from 'shared';
 import { Socket } from 'socket.io';
 
 // ----- Service Fields Types
@@ -25,9 +26,10 @@ export interface IAddParticipantFields {
   name: string;
 }
 
-export interface IRemoveParticipantData {
+export interface IAddNorminationFields {
   pollID: string;
   userID: string;
+  text: string;
 }
 
 // -----  Repositories Types
@@ -50,6 +52,12 @@ export interface IAuthPayload {
   userID: string;
   pollID: string;
   name: string;
+}
+
+export interface IAddNorminationData {
+  pollID: string;
+  norminationID: string;
+  normination: INormation;
 }
 
 /**

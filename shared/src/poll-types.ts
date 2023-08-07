@@ -9,4 +9,14 @@ export interface IPoll {
   participants: IParticipants;
   adminID: string;
   hasStarted: boolean;
+  norminations: INorminations;
+}
+
+export interface INormation {
+  userID: string;
+  text: string;
+}
+
+export interface INorminations {
+  [norminationID: string]: INormation;
 }

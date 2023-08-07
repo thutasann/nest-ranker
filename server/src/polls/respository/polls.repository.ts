@@ -10,6 +10,7 @@ import { IORedisKey } from 'src/redis.module';
 import {
   AddParticipantDataProps,
   CreatePollDataProps,
+  IAddNorminationData,
 } from '../interfaces/polls.interface';
 import { IPoll } from 'shared';
 
@@ -47,6 +48,7 @@ export class PollsRepository {
       participants: {},
       adminID: userID,
       hasStarted: false,
+      norminations: {},
     };
 
     this.logger.log(
@@ -96,7 +98,7 @@ export class PollsRepository {
       return JSON.parse(currentPoll);
     } catch (error) {
       this.logger.error(`🛑 Failed to get pollID ${pollID} `, error);
-      throw error;
+      throw new InternalServerErrorException(`Failed to get pollID ${pollID}`);
     }
   }
 
@@ -125,24 +127,10 @@ export class PollsRepository {
         participantPath,
         JSON.stringify(name),
       );
-
-      const pollJSON = await this.redisClient.send_command(
-        'JSON.GET',
-        key,
-        '.',
-      );
-
-      const poll = JSON.parse(pollJSON) as IPoll;
-
-      this.logger.debug(
-        `👨‍👨‍👧 Current Participants for pollID : ${pollID}`,
-        poll.participants,
-      );
-
-      return poll;
+      return await this.getPoll(pollID);
     } catch (error) {
       this.logger.error(`🛑 Failed to add new Participant ${name}\n${error}`);
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(`Failed to add new Participant`);
     }
   }
 
@@ -167,6 +155,67 @@ export class PollsRepository {
         error,
       );
       throw new InternalServerErrorException('Failed to remove participant');
+    }
+  }
+
+  /**
+   * Add Normation Method
+   * @param {IAddNorminationData} param - AddNormation Data
+   * @returns {Promise<IPoll>} pollData
+   */
+  async addNormination({
+    pollID,
+    norminationID,
+    normination,
+  }: IAddNorminationData): Promise<IPoll> {
+    this.logger.log(
+      `Attempting to add a normiation with normiationID/normiation: ${norminationID}/${normination} to pollID: ${pollID}`,
+    );
+
+    const key = `polls:${pollID}`;
+    const normiationPath = `.norminations.${norminationID}`;
+
+    try {
+      await this.redisClient.send_command('JSON.SET', key, normiationPath);
+      return this.getPoll(pollID);
+    } catch (error) {
+      this.logger.error(
+        `🛑 Failed to add a normination with norminationID/text: ${norminationID}/${normination.text} to pollID : ${pollID}`,
+      );
+
+      throw new InternalServerErrorException(
+        `Failed to add a normination with norminationID/text: ${norminationID}/${normination.text} to pollID : ${pollID}`,
+      );
+    }
+  }
+
+  /**
+   * Remove Normination
+   * @param { string } pollID - Poll ID
+   * @param { string } norminationID - Normination ID
+   * @returns { Promise<IPoll> } pollData
+   */
+  async removeNormination(
+    pollID: string,
+    norminationID: string,
+  ): Promise<IPoll> {
+    this.logger.log(
+      `Removing norminationID: ${norminationID} from poll : ${pollID}`,
+    );
+
+    const key = `polls.${pollID}`;
+    const normiationPath = `.norminations.${norminationID}`;
+
+    try {
+      await this.redisClient.send_command('JSON.DEL', key, normiationPath);
+      return this.getPoll(pollID);
+    } catch (error) {
+      this.logger.error(
+        `Failed to remove norminationID: ${norminationID} from poll: ${pollID}`,
+      );
+      throw new InternalServerErrorException(
+        `Failed to remove norminationID: ${norminationID} from poll: ${pollID}`,
+      );
     }
   }
 }

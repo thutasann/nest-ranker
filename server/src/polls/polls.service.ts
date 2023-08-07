@@ -2,13 +2,14 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IPoll } from 'shared';
 import {
+  IAddNorminationFields,
   IAddParticipantFields,
   ICreatePollFields,
   IJoinPollFields,
   IRejoinPollFields,
 } from './interfaces/polls.interface';
 import { PollsRepository } from './respository/polls.repository';
-import { createPollID, createUserID } from './utils/ids';
+import { createNorminationID, createPollID, createUserID } from './utils/ids';
 
 @Injectable()
 export class PollService {
@@ -110,5 +111,27 @@ export class PollService {
       );
       return updatedPoll;
     }
+  }
+
+  async addNormination({
+    pollID,
+    userID,
+    text,
+  }: IAddNorminationFields): Promise<IPoll> {
+    return this.pollsRepository.addNormination({
+      pollID,
+      norminationID: createNorminationID(),
+      normination: {
+        userID,
+        text,
+      },
+    });
+  }
+
+  async removeNormination(
+    pollID: string,
+    norminationID: string,
+  ): Promise<IPoll> {
+    return this.pollsRepository.removeNormination(pollID, norminationID);
   }
 }
