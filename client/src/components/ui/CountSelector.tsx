@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useEffect } from 'react';
 
 type CountSelectorProps = {
@@ -17,12 +17,7 @@ const CountSelector: React.FC<CountSelectorProps> = ({
   onChange,
 }) => {
   if (initial < min || initial > max) {
-    console.warn(
-      `'initial' = ${initial} must in the rang eof ${min} and ${max}. Setting a default initial value`
-    );
-
     const steps = (max - min) / step;
-
     initial = min + Math.floor(steps);
   }
 
@@ -55,4 +50,4 @@ const CountSelector: React.FC<CountSelectorProps> = ({
   );
 };
 
-export default CountSelector;
+export default memo(CountSelector);
