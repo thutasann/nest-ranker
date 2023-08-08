@@ -49,21 +49,18 @@ const Create = () => {
       setApiError('Name and poll topic are both required!');
     } else if (error && error.statusCode !== 400) {
       setApiError(error.messages[0]);
+    } else if (error?.statusCode === 500) {
+      setApiError('Something went wrong!');
     } else {
       actions.initilizePoll(data.poll);
       actions.setPollAccessToken(data.accessToken);
       actions.setPage(AppPage.WaitingRoom);
     }
 
-    actions.endLoading();
+    actions.stopLoading();
   };
   return (
     <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
-      {apiError ? (
-        <p className="text-center bg-red-600 py-1 rounded-md text-white">
-          {apiError || 'something went wrong!'}
-        </p>
-      ) : null}
       <div className="mb-3">
         <h3 className="text-center">Enter poll topic</h3>
         <div className="text-center w-full">
@@ -94,6 +91,11 @@ const Create = () => {
           </div>
         </div>
       </div>
+      {apiError ? (
+        <p className="text-center bg-red-600 py-1 rounded-md text-white">
+          {apiError || 'something went wrong!'}
+        </p>
+      ) : null}
       <div className="flex gap-3 justify-center items-center">
         <button
           className="box btn-purple w-32 my-2"
