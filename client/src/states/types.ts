@@ -1,4 +1,5 @@
 import { IPoll } from 'shared';
+import { Socket } from 'socket.io-client';
 
 export enum AppPage {
   Welcome = 'welcome',
@@ -17,4 +18,5 @@ export interface AppState {
   isLoading: boolean;
   poll?: IPoll;
   accessToken?: string;
+  socket?: Socket;
 }
