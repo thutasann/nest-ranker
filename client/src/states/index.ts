@@ -2,26 +2,7 @@ import { IPoll } from 'shared';
 import { proxy } from 'valtio';
 import { derive, subscribeKey } from 'valtio/utils';
 import { getTokenPayload } from '../util';
-
-export enum AppPage {
-  Welcome = 'welcome',
-  Create = 'create',
-  Join = 'join',
-  WaitingRoom = 'waiting-room',
-}
-
-interface IMe {
-  id: string;
-  name: string;
-}
-
-export interface AppState {
-  currentPage: AppPage;
-  me?: IMe;
-  isLoading: boolean;
-  poll?: IPoll;
-  accessToken?: string;
-}
+import { AppPage, AppState } from './types';
 
 const state: AppState = proxy({
   isLoading: false,

@@ -5,7 +5,8 @@ import Create from './pages/Create';
 import Join from './pages/Join';
 import WaitingRoom from './pages/WaitingRoom';
 import Welcome from './pages/Welcome';
-import { AppPage, state } from './states';
+import { state } from './states';
+import { AppPage } from './states/types';
 
 const routesConfig = {
   [AppPage.Welcome]: Welcome,

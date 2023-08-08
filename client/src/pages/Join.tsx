@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { IPoll } from 'shared';
 import { makeRequest } from '../api';
-import { actions, AppPage } from '../states';
+import { actions } from '../states';
+import { AppPage } from '../states/types';
 
 const Join = () => {
   const [pollID, setpollID] = useState('');

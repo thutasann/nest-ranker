@@ -1,5 +1,6 @@
 import React from 'react';
-import { actions, AppPage } from '../states';
+import { actions } from '../states';
+import { AppPage } from '../states/types';
 
 const Welcome: React.FC = () => {
   return (

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { makeRequest } from '../api';
 import CountSelector from '../components/ui/CountSelector';
-import { actions, AppPage } from '../states';
+import { actions } from '../states';
 import { IPoll } from 'shared';
+import { AppPage } from '../states/types';
 
 const Create = () => {
   const [pollTopic, setPollTopic] = useState('');
