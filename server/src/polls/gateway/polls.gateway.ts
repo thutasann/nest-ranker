@@ -136,15 +136,10 @@ export class PollsGateway
     @MessageBody('id') norminationID: string,
     @ConnectedSocket() client: ISocketWithAuth,
   ): Promise<void> {
-    this.logger.debug(
-      `Attempting to remove normination ${norminationID} from poll ${client.pollID}`,
-    );
-
     const updatedPoll = await this.pollsService.removeNormination(
       client.pollID,
       norminationID,
     );
-
     this.io.to(client.pollID).emit('poll_updated', updatedPoll);
   }
 

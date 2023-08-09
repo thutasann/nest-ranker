@@ -207,11 +207,11 @@ export class PollsRepository {
     pollID: string,
     norminationID: string,
   ): Promise<IPoll> {
-    this.logger.log(
+    this.logger.debug(
       `Removing norminationID: ${norminationID} from poll : ${pollID}`,
     );
 
-    const key = `polls.${pollID}`;
+    const key = `polls:${pollID}`;
     const normiationPath = `.norminations.${norminationID}`;
 
     try {
