@@ -33,3 +33,21 @@ open [http://localhost:3000/](http://localhost:3000/) to view server running in 
 ### Client
 
 open [http://localhost:8080/](http://localhost:8080/) to view client running in the browser.
+
+## Screens
+
+### Welcome Screen
+
+![Welcome](/examples/demo/welcome.png)
+
+### Forms Screen
+
+![Forms](/examples/demo/forms.png)
+
+### Lobby Screen
+
+![Forms](/examples/demo/lobby.png)
+
+### Nomination Screen
+
+![Forms](/examples/demo/nomination.png)
