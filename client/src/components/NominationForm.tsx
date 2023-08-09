@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdCancel } from 'react-icons/md';
-import { Nominations } from '../pollState';
+import { Nominations } from 'shared';
 import BottomSheet, { BottemSheetProps } from './ui/BottomSheet';
 
 type NominationFormProps = {
@@ -62,7 +62,7 @@ const NominationForm: React.FC<NominationFormProps> = ({
             <div
               key={nominationID}
               className={`my-2 flex justify-between items-center p-2 rounded-md ${getBoxStyle(
-                nomination.userID
+                nomination.userID,
               )}`}
             >
               <div>{nomination.text}</div>

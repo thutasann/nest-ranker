@@ -22,7 +22,7 @@ type TokenPayload = {
 };
 
 /**
- * Method to Parse accessToken to Javascript Object
+ * Method to Parse accessToken
  * @param { string } accessToken - Access Token
  * @returns { TokenPayload  } parsed token payload
  */

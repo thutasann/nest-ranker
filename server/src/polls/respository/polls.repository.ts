@@ -179,7 +179,12 @@ export class PollsRepository {
     const normiationPath = `.norminations.${norminationID}`;
 
     try {
-      await this.redisClient.send_command('JSON.SET', key, normiationPath);
+      await this.redisClient.send_command(
+        'JSON.SET',
+        key,
+        normiationPath,
+        JSON.stringify(normination),
+      );
       return this.getPoll(pollID);
     } catch (error) {
       this.logger.error(

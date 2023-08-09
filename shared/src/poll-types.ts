@@ -4,6 +4,15 @@ export interface IParticipants {
   [participantID: NorminationID]: string;
 }
 
+export type Nomination = {
+  userID: string;
+  text: string;
+};
+
+export type Nominations = {
+  [nominationID: NorminationID]: Nomination;
+};
+
 export interface IRankings {
   [userID: string]: NorminationID[];
 }

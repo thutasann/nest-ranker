@@ -123,7 +123,7 @@ export class PollsGateway
 
     const updatedPoll = await this.pollsService.addNormination({
       pollID: client.pollID,
-      userID: client.pollID,
+      userID: client.userID,
       text: normination.text,
     });
 

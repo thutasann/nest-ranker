@@ -1,10 +1,10 @@
 import React from 'react';
 import { MdClose } from 'react-icons/md';
 import BottomSheet, { BottemSheetProps } from './ui/BottomSheet';
-import { Participants } from 'shared/poll-types';
+import { IParticipants } from 'shared';
 
 type ParticipantListProps = {
-  participants?: Participants;
+  participants?: IParticipants;
   userID?: string;
   isAdmin: boolean;
   onRemoveParticipant: (id: string) => void;
@@ -25,7 +25,7 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
           key={id}
           className="mx-1 my-1 p-4 shadow-xl bg-white flex justify-between items-center rounded-md"
         >
-          <span className="ml-2 mr-1 text-indigo-700 text-xl text-center">
+          <span className="ml-2 mr-1 text-indigo-700 text-lg font-semibold text-center">
             {participant}
           </span>
           {isAdmin && userID !== id && (
@@ -34,7 +34,7 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
               onClick={() => onRemoveParticipant(id)}
             >
               <MdClose
-                className="fill-current text-black align-middle"
+                className="fill-current text-black align-middle hover:text-black/80"
                 size={18}
               />
             </span>

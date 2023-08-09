@@ -23,10 +23,14 @@ export type IWsErrorUnique = IWsError & {
 
 export interface AppState {
   currentPage: AppPage;
-  me?: IMe;
   isLoading: boolean;
   poll?: IPoll;
   accessToken?: string;
   socket?: Socket;
   wsErrors: IWsErrorUnique[];
+  me?: IMe;
+  isAdmin: boolean;
+  norminationCount: number;
+  participantCount: number;
+  canStartVote: boolean;
 }
