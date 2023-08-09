@@ -15,6 +15,8 @@ export interface IActions {
   removeNormination: (id: string) => void;
   removeParticipant: (id: string) => void;
   startVote: () => void;
+  submitRankings: (rankings: string[]) => void;
+  cancelPoll: () => void;
 
   startOver: () => void;
   reset: () => void;

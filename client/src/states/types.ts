@@ -6,6 +6,7 @@ export enum AppPage {
   Create = 'create',
   Join = 'join',
   WaitingRoom = 'waiting-room',
+  Voting = 'voting',
 }
 export interface IMe {
   id: string;

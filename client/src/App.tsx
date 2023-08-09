@@ -10,7 +10,7 @@ import SnackBar from './components/ui/SnackBar';
 
 devtools(state, 'app state');
 const App: React.FC = () => {
-  const { isLoading, wsErrors } = useSnapshot(state);
+  const { isLoading, wsErrors, me, socket, poll } = useSnapshot(state);
 
   useEffect(() => {
     console.log(
@@ -43,6 +43,15 @@ const App: React.FC = () => {
     // socket initialization on server sends updated poll to the client
     actions.initializedSocket();
   }, []);
+
+  useEffect(() => {
+    console.log(`App useEffect - check current participant`);
+    const myID = me?.id;
+
+    if (myID && socket?.connected && !poll?.participants[myID]) {
+      actions.startOver();
+    }
+  }, [poll?.participants]);
 
   return (
     <Fragment>

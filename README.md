@@ -51,3 +51,7 @@ open [http://localhost:8080/](http://localhost:8080/) to view client running in 
 ### Nomination Screen
 
 ![Forms](/examples/demo/nomination.png)
+
+### Voting Screen
+
+![Voting](/examples/demo/voting.png)

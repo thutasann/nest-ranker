@@ -73,9 +73,15 @@ const actions: IActions = {
           actions,
         }),
       );
-    } else {
-      state.socket.connect();
+      return;
     }
+
+    if (state.socket.connected) {
+      state.socket.connect();
+      return;
+    }
+
+    actions.stopLoading();
   },
 
   updatePoll: (poll: IPoll) => {
@@ -111,6 +117,14 @@ const actions: IActions = {
 
   startVote: () => {
     state.socket?.emit('start_vote');
+  },
+
+  submitRankings: (rankings: string[]): void => {
+    state.socket?.emit('submit_rankings', { rankings });
+  },
+
+  cancelPoll: (): void => {
+    state.socket?.emit('cancel_poll');
   },
 
   addWsError: (error: IWsError): void => {

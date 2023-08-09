@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Fragment, useEffect, useState } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdContentCopy, MdPeopleOutline } from 'react-icons/md';
@@ -97,7 +96,7 @@ const WaitingRoom = () => {
             <button
               className="box btn-orange my-2"
               disabled={!currentState.canStartVote}
-              onClick={() => console.log(`will add start vote next time`)}
+              onClick={() => actions.startVote()}
             >
               Start voting
             </button>

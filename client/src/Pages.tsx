@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useSnapshot } from 'valtio';
 import Create from './pages/Create';
 import Join from './pages/Join';
+import Voting from './pages/Voting';
 import WaitingRoom from './pages/WaitingRoom';
 import Welcome from './pages/Welcome';
 import { actions, state } from './states';
@@ -13,6 +14,7 @@ const routesConfig = {
   [AppPage.Create]: Create,
   [AppPage.Join]: Join,
   [AppPage.WaitingRoom]: WaitingRoom,
+  [AppPage.Voting]: Voting,
 };
 
 const Pages = () => {
@@ -26,6 +28,10 @@ const Pages = () => {
       !currentState.poll?.hasStarted
     ) {
       actions.setPage(AppPage.WaitingRoom);
+    }
+
+    if (currentState.me?.id && currentState.poll?.hasStarted) {
+      actions.setPage(AppPage.Voting);
     }
   }, [currentState.me?.id, currentState.poll?.hasStarted]);
 

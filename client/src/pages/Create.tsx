@@ -76,7 +76,7 @@ const Create = () => {
           <CountSelector
             min={1}
             max={5}
-            initial={3}
+            initial={2}
             step={1}
             onChange={(val) => setMaxVotes(val)}
           />

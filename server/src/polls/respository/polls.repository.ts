@@ -241,6 +241,7 @@ export class PollsRepository {
       await this.redisClient.send_command(
         'JSON.SET',
         key,
+        '.hasStarted',
         JSON.stringify(true),
       );
       return this.getPoll(pollID);
