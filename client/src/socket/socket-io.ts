@@ -39,7 +39,19 @@ export const createSocketWithHandlers = ({
   // connect_error (general)
   socket.on('connect_error', () => {
     console.log(`🛑 Failed to connect socket`);
+
+    actions.addWsError({
+      type: 'Connection Error',
+      mesage: 'Failed to connect to the Poll',
+    });
+
     actions.stopLoading();
+  });
+
+  // exception (general)
+  socket.on('exception', (error) => {
+    console.log(`🛑 Ws Exception error: `, error);
+    actions.addWsError(error);
   });
 
   // poll_updated

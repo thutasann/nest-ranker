@@ -2,8 +2,9 @@ import { IPoll } from 'shared';
 import { proxy, ref } from 'valtio';
 import { derive, subscribeKey } from 'valtio/utils';
 import { getTokenPayload } from '../util';
-import { AppPage, AppState } from './types';
+import { AppPage, AppState, IWsError } from './types';
 import { createSocketWithHandlers, socketIOUrl } from '../socket/socket-io';
+import { nanoid } from 'nanoid';
 
 /**
  * Initial State
@@ -11,6 +12,7 @@ import { createSocketWithHandlers, socketIOUrl } from '../socket/socket-io';
 const state: AppState = proxy({
   isLoading: false,
   currentPage: AppPage.Welcome,
+  wsErrors: [],
 });
 
 /**
@@ -73,9 +75,6 @@ const actions = {
     state.accessToken = token;
   },
 
-  /**
-   * Socket Initialization Action
-   */
   initializedSocket: (): void => {
     if (!state.socket) {
       state.socket = ref(
@@ -92,6 +91,20 @@ const actions = {
 
   updatePoll: (poll: IPoll) => {
     state.poll = poll;
+  },
+
+  addWsError: (error: IWsError): void => {
+    state.wsErrors = [
+      ...state.wsErrors,
+      {
+        ...error,
+        id: nanoid(),
+      },
+    ];
+  },
+
+  removeError: (id: string): void => {
+    state.wsErrors = state.wsErrors.filter((error) => error.id !== id);
   },
 };
 

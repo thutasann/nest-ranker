@@ -10,10 +10,11 @@ This is the Web app where we can vote upon the topics in real time with your Fri
 - Redis
 - Docker
 - Tailwind
+- Valtio
 
 ## Run Locally
 
-### Install the Dependencies
+### Available scripts
 
 ```bash
 npm install

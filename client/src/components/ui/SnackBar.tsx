@@ -35,7 +35,6 @@ const SnackBar: React.FC<SnackBarProps> = ({
   };
 
   useEffect(() => {
-    console.log('snackbar useEffect', title, message, show);
     if (show) {
       setShowSnackBar(true);
     }

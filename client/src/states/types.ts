@@ -12,6 +12,15 @@ export interface IMe {
   name: string;
 }
 
+export interface IWsError {
+  type: string;
+  mesage: string;
+}
+
+export type IWsErrorUnique = IWsError & {
+  id: string;
+};
+
 export interface AppState {
   currentPage: AppPage;
   me?: IMe;
@@ -19,4 +28,5 @@ export interface AppState {
   poll?: IPoll;
   accessToken?: string;
   socket?: Socket;
+  wsErrors: IWsErrorUnique[];
 }
