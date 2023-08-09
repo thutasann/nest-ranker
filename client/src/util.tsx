@@ -21,5 +21,10 @@ type TokenPayload = {
   pollID: string;
 };
 
+/**
+ * Method to Parse accessToken to Javascript Object
+ * @param { string } accessToken - Access Token
+ * @returns { TokenPayload  } parsed token payload
+ */
 export const getTokenPayload = (accessToken: string): TokenPayload =>
   JSON.parse(window.atob(accessToken.split('.')[1]));

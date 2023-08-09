@@ -28,11 +28,18 @@ export const createSocketWithHandlers = ({
     transports: ['websocket', 'polling'],
   });
 
-  // connect
+  // connect (general)
   socket.on('connect', () => {
     console.log(
       `✅ Connected with socketID: ${socket.id} userID ${state.me?.id} will join room ${state.poll?.id}`,
     );
+    actions.stopLoading();
+  });
+
+  // connect_error (general)
+  socket.on('connect_error', () => {
+    console.log(`🛑 Failed to connect socket`);
+    actions.stopLoading();
   });
 
   // poll_updated

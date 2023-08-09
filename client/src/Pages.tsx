@@ -1,11 +1,11 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { useSnapshot } from 'valtio';
 import Create from './pages/Create';
 import Join from './pages/Join';
 import WaitingRoom from './pages/WaitingRoom';
 import Welcome from './pages/Welcome';
-import { state } from './states';
+import { actions, state } from './states';
 import { AppPage } from './states/types';
 
 const routesConfig = {
@@ -18,6 +18,12 @@ const routesConfig = {
 const Pages = () => {
   const currentState = useSnapshot(state);
   const nodeRef = useRef(null);
+
+  useEffect(() => {
+    if (currentState.me?.id && !currentState.poll?.hasStarted) {
+      actions.setPage(AppPage.WaitingRoom);
+    }
+  }, [currentState.me?.id, currentState.poll?.hasStarted]);
 
   return (
     <Fragment>

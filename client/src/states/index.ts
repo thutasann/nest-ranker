@@ -26,6 +26,7 @@ const statewWithComputed: AppState = derive(
       }
 
       const token = getTokenPayload(accessToken);
+      console.log('token', token);
 
       return {
         id: token.sub,
@@ -72,6 +73,9 @@ const actions = {
     state.accessToken = token;
   },
 
+  /**
+   * Socket Initialization Action
+   */
   initializedSocket: (): void => {
     if (!state.socket) {
       state.socket = ref(
@@ -94,8 +98,6 @@ const actions = {
 subscribeKey(state, 'accessToken', () => {
   if (state.accessToken && state.poll) {
     localStorage.setItem('accessToken', state.accessToken);
-  } else {
-    localStorage.removeItem('accessToken');
   }
 });
 

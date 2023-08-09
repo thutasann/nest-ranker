@@ -40,7 +40,7 @@ export class PollsGateway
     this.logger.log(`🌍 Websocket Gateway initialized. `);
   }
 
-  async handleConnection(client: ISocketWithAuth) {
+  async handleConnection(client: ISocketWithAuth): Promise<void> {
     const sockets = this.io.sockets;
     this.logger.debug(
       ` Number of all of the connected sockets: ${sockets.size}`,
@@ -71,7 +71,7 @@ export class PollsGateway
     this.io.to(roomName).emit('poll_updated', updatedPoll);
   }
 
-  async handleDisconnect(client: ISocketWithAuth) {
+  async handleDisconnect(client: ISocketWithAuth): Promise<void> {
     const { pollID, userID } = client;
     const updatedPoll = await this.pollsService.removeParticipant(
       pollID,
