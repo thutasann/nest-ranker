@@ -17,6 +17,7 @@ export interface IActions {
   startVote: () => void;
   submitRankings: (rankings: string[]) => void;
   cancelPoll: () => void;
+  closePoll: () => void;
 
   startOver: () => void;
   reset: () => void;

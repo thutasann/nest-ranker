@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
 import ConfirmationDialog from '../components/ui/ConfirmationDialog';
@@ -88,7 +87,7 @@ const Voting = () => {
               message="This will cancel the poll and remove all users"
               showDialog={confirmCancel}
               onCancel={() => setConfirmCancel(false)}
-              onConfirm={() => actions}
+              onConfirm={() => actions.cancelPoll()}
             />
           </>
         )}

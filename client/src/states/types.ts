@@ -7,6 +7,7 @@ export enum AppPage {
   Join = 'join',
   WaitingRoom = 'waiting-room',
   Voting = 'voting',
+  Results = 'results',
 }
 export interface IMe {
   id: string;
@@ -34,4 +35,6 @@ export interface AppState {
   norminationCount: number;
   participantCount: number;
   canStartVote: boolean;
+  hasVoted: boolean;
+  rankingsCount: number;
 }

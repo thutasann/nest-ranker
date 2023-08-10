@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useSnapshot } from 'valtio';
 import Create from './pages/Create';
 import Join from './pages/Join';
+import Results from './pages/Results';
 import Voting from './pages/Voting';
 import WaitingRoom from './pages/WaitingRoom';
 import Welcome from './pages/Welcome';
@@ -15,10 +16,13 @@ const routesConfig = {
   [AppPage.Join]: Join,
   [AppPage.WaitingRoom]: WaitingRoom,
   [AppPage.Voting]: Voting,
+  [AppPage.Results]: Results,
 };
 
 const Pages = () => {
   const currentState = useSnapshot(state);
+  console.log('currentState', currentState.hasVoted);
+
   const nodeRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +37,15 @@ const Pages = () => {
     if (currentState.me?.id && currentState.poll?.hasStarted) {
       actions.setPage(AppPage.Voting);
     }
-  }, [currentState.me?.id, currentState.poll?.hasStarted]);
+
+    if (currentState.me?.id && currentState.hasVoted) {
+      actions.setPage(AppPage.Results);
+    }
+  }, [
+    currentState.me?.id,
+    currentState.poll?.hasStarted,
+    currentState.hasVoted,
+  ]);
 
   return (
     <Fragment>

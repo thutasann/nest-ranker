@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import ParticipantList from '../components/ParticipantList';
-import { Participants } from 'shared/poll-types';
+import { IParticipants } from 'shared';
 
 export default {
   title: 'ParticipantList',
@@ -17,7 +17,7 @@ export default {
   },
 } as ComponentMeta<typeof ParticipantList>;
 
-const participants: Participants = {
+const participants: IParticipants = {
   '1': 'Jeannie',
   '2': 'Ryan',
   '3': 'Ayalen',

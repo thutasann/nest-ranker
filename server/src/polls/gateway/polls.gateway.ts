@@ -168,7 +168,7 @@ export class PollsGateway
       rankings,
     });
 
-    return updatedPoll;
+    this.io.to(client.pollID).emit('poll_updated', updatedPoll);
   }
 
   @UseGuards(GatewayAdminGuard)

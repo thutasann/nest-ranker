@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
 import ResultsList from '../components/ResultsList';
-import { Results } from 'shared/poll-types';
 
 export default {
   title: 'ResultsList',
@@ -15,7 +13,7 @@ const Template: ComponentStory<typeof ResultsList> = (args) => (
   </div>
 );
 
-const results: Results = [
+const results = [
   {
     votes: [
       {
@@ -83,7 +81,7 @@ ResultsBasic.args = {
   results: results,
 };
 
-const resultsLong: Results = [
+const resultsLong = [
   {
     votes: [
       {

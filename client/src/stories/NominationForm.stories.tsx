@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import NominationForm from '../components/NominationForm';
-import { Nominations } from 'shared/poll-types';
+import { INorminations } from 'shared';
 
 export default {
   title: 'NominationForm',
@@ -18,7 +18,7 @@ export default {
   },
 } as ComponentMeta<typeof NominationForm>;
 
-const nominations: Nominations = {
+const nominations: INorminations = {
   item1: {
     userID: '1',
     text: 'Nominanationaroo 1',

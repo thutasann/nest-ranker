@@ -38,6 +38,14 @@ const state = proxy<AppState>({
     const votesPerVoter = this.poll?.votesPerVoter ?? 100;
     return this.norminationCount >= votesPerVoter;
   },
+  get hasVoted() {
+    const rankings = this.poll?.rankings || {};
+    const userID = this.me?.id || '';
+    return rankings[userID] !== undefined ? true : false;
+  },
+  get rankingsCount() {
+    return Object.keys(this.poll?.rankings || {}).length;
+  },
 });
 
 /**
@@ -125,6 +133,10 @@ const actions: IActions = {
 
   cancelPoll: (): void => {
     state.socket?.emit('cancel_poll');
+  },
+
+  closePoll: (): void => {
+    state.socket?.emit('close_poll');
   },
 
   addWsError: (error: IWsError): void => {
